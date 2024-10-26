@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: sentiment_db
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - /usr/local/docker/sentiment:/mongo/data
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dev
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+
+  mongo-express:
+    image: mongo-express
+    container_name: sentiment_db_admin
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: dev
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mongo
+      ME_CONFIG_MONGODB_URL: mongodb://dev:mongo@mongo:27017/
