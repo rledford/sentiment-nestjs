@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { LoggerService } from 'src/platform/services/logger.service';
-import { VertexService } from 'src/platform/services/vertex.service';
+import { LanguageService } from 'src/platform/services/language.service';
 import { SentimentScoreDTO, SentimentDTO } from './sentiment.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Sentiment } from './sentiment.schema';
@@ -15,7 +15,7 @@ import { Types } from 'mongoose';
 export class SentimentService {
   constructor(
     private readonly logger: LoggerService,
-    private readonly vertexService: VertexService,
+    private readonly languageService: LanguageService,
     @InjectModel(Sentiment.name) private sentimentModel: Model<Sentiment>,
   ) {
     this.logger.setContext(SentimentService.name);
@@ -27,23 +27,25 @@ export class SentimentService {
     this.logger.log(`Computing sentiment for content: length=${contentLength}`);
 
     const startTime = Date.now();
-    const score = await this.vertexService.analyze(content);
+    const { score, magnitude } = await this.languageService.analyze(content);
     const duration = Date.now() - startTime;
 
     const result = new SentimentScoreDTO();
     result.score = score;
+    result.magnitude = magnitude;
 
     // should we fail here or catch the error
     // and log it, so we can still return the
     // result to the consumer
     await this.sentimentModel.create({
       score,
+      magnitude,
       duration,
       content,
     });
 
     this.logger.log(
-      `Computed sentiment for content: length=${contentLength} duration=${duration} score=${score}`,
+      `Computed sentiment for content: length=${contentLength} duration=${duration} score=${score} magnitude=${magnitude}`,
     );
 
     return result;
@@ -80,6 +82,7 @@ export class SentimentService {
     return {
       id: sentiment._id.toHexString(),
       score: sentiment.score,
+      magnitude: sentiment.magnitude,
       duration: sentiment.duration,
       content: sentiment.content,
       createdAt: sentiment.createdAt,

@@ -3,7 +3,7 @@ import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Model, Types } from 'mongoose';
 import { LoggerService } from 'src/platform/services/logger.service';
-import { VertexService } from 'src/platform/services/vertex.service';
+import { LanguageService } from 'src/platform/services/language.service';
 import { Sentiment } from './sentiment.schema';
 import { SentimentService } from './sentiment.service';
 import { generateSentiment, generateSentiments } from './test-utils/data';
@@ -11,19 +11,19 @@ import { generateSentiment, generateSentiments } from './test-utils/data';
 describe('SentimentService', () => {
   let service: SentimentService;
   let mockSentimentModel: Model<Sentiment>;
-  let mockVertexService: VertexService;
+  let mockLanguageService: LanguageService;
   let mockLoggerService: LoggerService;
 
   beforeEach(async () => {
     mockSentimentModel = createMock<Model<Sentiment>>();
-    mockVertexService = createMock<VertexService>();
+    mockLanguageService = createMock<LanguageService>();
     mockLoggerService = createMock<LoggerService>();
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         { provide: getModelToken('Sentiment'), useValue: mockSentimentModel },
         { provide: LoggerService, useValue: mockLoggerService },
-        { provide: VertexService, useValue: mockVertexService },
+        { provide: LanguageService, useValue: mockLanguageService },
         SentimentService,
       ],
     }).compile();
@@ -34,33 +34,43 @@ describe('SentimentService', () => {
   describe('computeSentimentScore', () => {
     it('should return sentiment score', async () => {
       const sentimentScore = 1.0;
+      const sentimentMag = 0.5;
 
       jest
-        .spyOn(mockVertexService, 'analyze')
-        .mockImplementationOnce(async (text: string) => sentimentScore);
+        .spyOn(mockLanguageService, 'analyze')
+        .mockImplementationOnce(async (_: string) => ({
+          score: sentimentScore,
+          magnitude: sentimentMag,
+        }));
 
       const result = await service.computeSentimentScore('test');
 
-      expect(mockVertexService.analyze).toHaveBeenCalledTimes(1);
+      expect(mockLanguageService.analyze).toHaveBeenCalledTimes(1);
       expect(result).toMatchObject({
         score: sentimentScore,
+        magnitude: sentimentMag,
       });
     });
 
     it('should save sentiment computation data', async () => {
       const sentimentScore = 1.0;
+      const sentimentMag = 0.5;
       const sentimentContent = 'test';
 
       global.Date.now = () => 1;
 
       jest
-        .spyOn(mockVertexService, 'analyze')
-        .mockImplementationOnce(async (text: string) => sentimentScore);
+        .spyOn(mockLanguageService, 'analyze')
+        .mockImplementationOnce(async (_: string) => ({
+          score: sentimentScore,
+          magnitude: sentimentMag,
+        }));
 
       await service.computeSentimentScore(sentimentContent);
 
       expect(mockSentimentModel.create).toHaveBeenCalledWith({
         score: sentimentScore,
+        magnitude: sentimentMag,
         duration: 0,
         content: sentimentContent,
       });

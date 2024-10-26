@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@google-cloud/aiplatform':
-        specifier: 3.31.0
-        version: 3.31.0
+      '@google-cloud/language':
+        specifier: 6.5.0
+        version: 6.5.0
       '@nestjs/common':
         specifier: 10.4.6
         version: 10.4.6(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1)
@@ -361,8 +361,8 @@ packages:
   '@golevelup/ts-jest@0.5.6':
     resolution: {integrity: sha512-QnxP42Qu9M2UogdrF2kxpZcgWeW9R3WoUr+LdpcsbkvX3LjEoDYgrJ/PnV/QUCbxB1gaKbhR0ZxlDxE1cPkpDg==}
 
-  '@google-cloud/aiplatform@3.31.0':
-    resolution: {integrity: sha512-lzzkE5bC7VBciIBqP6X/X+N/yoDH/y6WoAGF1GWcRC4D/fzTJhDLGGN7iJQbP85drZw32WVm9GJCFwkL+qdClg==}
+  '@google-cloud/language@6.5.0':
+    resolution: {integrity: sha512-/T6B+RL3TbkLRjDkXy4W3vuXxLUzD1Hc3OAzDKi7UXFcMsN8QB3n3KaIfFLYaxTpi3aGFIoXr3vDzr6v72WYig==}
     engines: {node: '>=14.0.0'}
 
   '@grpc/grpc-js@1.12.2':
@@ -2184,10 +2184,6 @@ packages:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
     engines: {node: '>=10'}
 
-  long@1.1.5:
-    resolution: {integrity: sha512-TU6nAF5SdasnTr28c7e74P4Crbn9o3/zwo1pM22Wvg2i2vlZ4Eelxwu4QT7j21z0sDBlJDEnEZjXTZg2J8WJrg==}
-    engines: {node: '>=0.6'}
-
   long@5.2.3:
     resolution: {integrity: sha512-lcHwpNoggQTObv5apGNCTdJrO69eHOZMi4BNC+rTLER8iHAqGrUVeLh/irVIM7zTw2bOXA8T6uNPeujwOLg/2Q==}
 
@@ -2552,9 +2548,6 @@ packages:
   proto3-json-serializer@2.0.2:
     resolution: {integrity: sha512-SAzp/O4Yh02jGdRc+uIrGoe87dkN/XtwxfZ4ZyafJHymd79ozp5VG5nyZ7ygqPM5+cpLDjjGnYFUkngonyDPOQ==}
     engines: {node: '>=14.0.0'}
-
-  protobuf.js@1.1.2:
-    resolution: {integrity: sha512-USO7Xus/pzPw549M1TguiyoOrKEhm9VMXv+CkDufcjMC8Rd7EPbxeRQPEjCV8ua1tm0k7z9xHkogcxovZogWdA==}
 
   protobufjs@7.4.0:
     resolution: {integrity: sha512-mRUWCc3KUU4w1jU8sGxICXH/gNS94DvI1gxqDvBzhj1JpcsimQkYiOJfwsPUykUI5ZaspFbSgmBLER8IrQ3tqw==}
@@ -3420,10 +3413,9 @@ snapshots:
 
   '@golevelup/ts-jest@0.5.6': {}
 
-  '@google-cloud/aiplatform@3.31.0':
+  '@google-cloud/language@6.5.0':
     dependencies:
       google-gax: 4.4.1
-      protobuf.js: 1.1.2
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -5746,8 +5738,6 @@ snapshots:
       chalk: 4.1.2
       is-unicode-supported: 0.1.0
 
-  long@1.1.5: {}
-
   long@5.2.3: {}
 
   lru-cache@10.4.3: {}
@@ -6059,10 +6049,6 @@ snapshots:
   proto3-json-serializer@2.0.2:
     dependencies:
       protobufjs: 7.4.0
-
-  protobuf.js@1.1.2:
-    dependencies:
-      long: 1.1.5
 
   protobufjs@7.4.0:
     dependencies:

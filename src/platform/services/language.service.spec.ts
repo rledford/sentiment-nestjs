@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PlatformModule } from '../platform.module';
-import { VertexService } from './vertex.service';
+import { LanguageService } from './language.service';
 
-describe('SentimentController', () => {
-  let service: VertexService;
+describe('LanguageService', () => {
+  let service: LanguageService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [PlatformModule],
     }).compile();
 
-    service = module.get<VertexService>(VertexService);
+    service = module.get<LanguageService>(LanguageService);
   });
 
   it('should be defined', () => {

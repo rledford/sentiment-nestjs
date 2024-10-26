@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
 import { IsString, Length } from 'class-validator';
 
 export class SentimentInputDTO {
@@ -12,6 +11,8 @@ export class SentimentInputDTO {
 export class SentimentScoreDTO {
   @ApiProperty()
   score: number;
+  @ApiProperty()
+  magnitude: number;
 }
 
 export class SentimentDTO {
@@ -19,6 +20,8 @@ export class SentimentDTO {
   id: string;
   @ApiProperty()
   score: number;
+  @ApiProperty()
+  magnitude: number;
   @ApiProperty()
   duration: number;
   @ApiProperty()

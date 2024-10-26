@@ -10,6 +10,9 @@ export class Sentiment {
   score: number;
 
   @Prop({ required: true })
+  magnitude: number;
+
+  @Prop({ required: true })
   duration: number;
 
   @Prop({ required: true })

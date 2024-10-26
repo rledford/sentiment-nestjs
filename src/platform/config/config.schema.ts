@@ -7,4 +7,5 @@ export const configValidationSchema = Joi.object({
   MONGO_USER: Joi.string(),
   MONGO_PASS: Joi.string(),
   MONGO_NAME: Joi.string(),
+  GNL_CLIENT_API_KEY: Joi.string(),
 });

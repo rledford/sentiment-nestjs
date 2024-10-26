@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { configValidationSchema } from './config/config.schema';
 import { LoggerService } from './services/logger.service';
-import { VertexService } from './services/vertex.service';
+import { LanguageService } from './services/language.service';
 
 @Module({
   imports: [
@@ -11,7 +11,7 @@ import { VertexService } from './services/vertex.service';
       validationSchema: configValidationSchema,
     }),
   ],
-  exports: [LoggerService, VertexService],
-  providers: [LoggerService, VertexService],
+  exports: [LoggerService, LanguageService],
+  providers: [LoggerService, LanguageService],
 })
 export class PlatformModule {}
