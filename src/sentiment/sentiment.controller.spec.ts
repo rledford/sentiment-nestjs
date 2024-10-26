@@ -5,9 +5,9 @@ import { Model } from 'mongoose';
 import { LanguageService } from 'src/platform/services/language.service';
 import { LoggerService } from 'src/platform/services/logger.service';
 import { SentimentController } from './sentiment.controller';
-import { SentimentModule } from './sentiment.module';
 import { Sentiment } from './sentiment.schema';
 import { SentimentService } from './sentiment.service';
+import { generateSentimentDTO, generateSentimentDTOs } from './test-utils/data';
 
 describe('SentimentController', () => {
   let controller: SentimentController;
@@ -35,7 +35,52 @@ describe('SentimentController', () => {
     controller = module.get<SentimentController>(SentimentController);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  describe('compute', () => {
+    it('should repsond with the computed score data', async () => {
+      const expected = { score: 1.0, magnitude: 0.5 };
+      jest
+        .spyOn(mockSentimentService, 'computeSentimentScore')
+        .mockResolvedValue(expected);
+
+      const result = await controller.compute({ content: 'test' });
+
+      expect(result).toMatchObject(expected);
+    });
+  });
+
+  describe('getOne', () => {
+    it('should return sentiment record', async () => {
+      const expected = generateSentimentDTO();
+      jest
+        .spyOn(mockSentimentService, 'getSentimentById')
+        .mockImplementationOnce(async (_: string) => expected);
+
+      const result = await controller.getOne(expected.id);
+
+      expect(result).toBe(expected);
+    });
+
+    it('should return error if service throws', async () => {
+      jest
+        .spyOn(mockSentimentService, 'getSentimentById')
+        .mockImplementationOnce((async () => {
+          throw new Error('error');
+        }) as jest.Mock);
+
+      await expect(() => controller.getOne('test')).rejects.toThrow('error');
+    });
+  });
+
+  describe('getAll', () => {
+    it('should return all sentiment records', async () => {
+      const expected = generateSentimentDTOs(2);
+      jest
+        .spyOn(mockSentimentService, 'getAllSentiments')
+        .mockResolvedValue(expected);
+
+      const result = await controller.getAll();
+
+      expect(result).toMatchObject(expected);
+    });
   });
 });

@@ -129,6 +129,18 @@ describe('SentimentService', () => {
       );
     });
 
+    it('should throw on database error', async () => {
+      jest
+        .spyOn(mockSentimentModel, 'findById')
+        .mockImplementationOnce((async () => {
+          throw new Error('Something went wrong');
+        }) as jest.Mock);
+      const hexId = new Types.ObjectId().toHexString();
+      await expect(() => service.getSentimentById(hexId)).rejects.toThrow(
+        'Something went wrong',
+      );
+    });
+
     it('should thow not found if sentiment does not exist', async () => {
       const hexId = new Types.ObjectId().toHexString();
       jest.spyOn(mockSentimentModel, 'findById').mockResolvedValueOnce(null);

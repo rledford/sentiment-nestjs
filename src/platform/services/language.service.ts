@@ -20,15 +20,15 @@ export class LanguageService {
       },
     });
 
-    if (!res.documentSentiment) {
+    if (!res.documentSentiment?.score || !res.documentSentiment?.magnitude) {
       throw new InternalServerErrorException(
         'Expected sentiment data in language analysis response.',
       );
     }
 
     return {
-      score: res.documentSentiment?.score || 0,
-      magnitude: res.documentSentiment?.magnitude || 0,
+      score: res.documentSentiment.score,
+      magnitude: res.documentSentiment.magnitude,
     };
   }
 }
