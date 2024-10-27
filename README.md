@@ -13,8 +13,8 @@ persistence.
 
 ## Configuration
 
-This application supports configuration through environment variables and `.env` files.
-See [.env.example](./.env.example)
+This application supports configuration through environment variables and `.env`
+files. See [.env.example](./.env.example)
 
 When using `.env` files for configuration locally, each `NODE_ENV` value should have
 a specific file.
@@ -26,8 +26,8 @@ a specific file.
 
 ## Dev Setup
 
-Ensure environment variables are set or available in a `.env.development.local` file located in the root
-of the project directory.
+Ensure environment variables are set or available in a `.env.development.local`
+file located in the root of the project directory.
 
 ```sh
 # install deps
@@ -37,7 +37,7 @@ pnpm i
 docker compose up -d mongo
 
 # start the server in dev mode
-pnpmp start:dev
+pnpm start:dev
 ```
 
 ## API Documentation
