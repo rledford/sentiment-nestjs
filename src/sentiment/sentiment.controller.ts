@@ -18,7 +18,7 @@ import { SentimentService } from './sentiment.service';
 @ApiTags('sentiments')
 @Controller('sentiments')
 export class SentimentController {
-  constructor(private readonly service: SentimentService) {}
+  constructor(private readonly service: SentimentService) { }
 
   @Post()
   @ApiOperation({ summary: 'Compute the sentiment of text' })
@@ -44,7 +44,6 @@ export class SentimentController {
   @ApiOperation({ summary: 'Get all recorded sentiment computations' })
   @ApiOkResponse({ type: [SentimentDTO] })
   async getAll(): Promise<SentimentDTO[]> {
-    const result = await this.service.getAllSentiments();
-    return plainToClass(SentimentDTO, result);
+    return await this.service.getAllSentiments();
   }
 }
