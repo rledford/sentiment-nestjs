@@ -35,7 +35,7 @@ describe('LanguageService', () => {
         ]);
 
       await expect(() => service.analyze('test')).rejects.toThrow(
-        'Expected sentiment data in language analysis response.',
+        'Expected score and magnitude in language analysis response.',
       );
     });
   });

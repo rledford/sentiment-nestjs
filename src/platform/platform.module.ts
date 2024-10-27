@@ -4,7 +4,7 @@ import { configValidationSchema } from './config/config.schema';
 import { LoggerService } from './services/logger.service';
 import { LanguageService } from './services/language.service';
 
-const NODE_ENV = process.env.NODE_ENV;
+const NODE_ENV = process.env.NODE_ENV || 'development';
 
 @Module({
   imports: [
