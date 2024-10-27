@@ -115,18 +115,9 @@ describe('SentimentService', () => {
         .spyOn(mockSentimentModel, 'findById')
         .mockResolvedValueOnce(sentiment);
 
-      const result = await service.getSentimentById(
-        sentiment._id.toHexString(),
-      );
+      const result = await service.getSentimentById(sentiment._id);
 
       expect(result.id).toBe(sentiment._id.toHexString());
-    });
-
-    it('should throw if id is invalid', async () => {
-      jest.spyOn(mockSentimentModel, 'findById').mockResolvedValueOnce(null);
-      await expect(() => service.getSentimentById('')).rejects.toThrow(
-        'Invalid ID',
-      );
     });
 
     it('should throw on database error', async () => {
@@ -135,16 +126,16 @@ describe('SentimentService', () => {
         .mockImplementationOnce((async () => {
           throw new Error('Something went wrong');
         }) as jest.Mock);
-      const hexId = new Types.ObjectId().toHexString();
-      await expect(() => service.getSentimentById(hexId)).rejects.toThrow(
+      const id = new Types.ObjectId();
+      await expect(() => service.getSentimentById(id)).rejects.toThrow(
         'Something went wrong',
       );
     });
 
     it('should thow not found if sentiment does not exist', async () => {
-      const hexId = new Types.ObjectId().toHexString();
+      const id = new Types.ObjectId();
       jest.spyOn(mockSentimentModel, 'findById').mockResolvedValueOnce(null);
-      await expect(() => service.getSentimentById(hexId)).rejects.toThrow(
+      await expect(() => service.getSentimentById(id)).rejects.toThrow(
         'Not Found',
       );
     });

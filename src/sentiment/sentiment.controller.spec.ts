@@ -8,6 +8,7 @@ import { SentimentController } from './sentiment.controller';
 import { Sentiment } from './sentiment.schema';
 import { SentimentService } from './sentiment.service';
 import { generateSentimentDTO, generateSentimentDTOs } from './test-utils/data';
+import { Types } from 'mongoose';
 
 describe('SentimentController', () => {
   let controller: SentimentController;
@@ -55,7 +56,9 @@ describe('SentimentController', () => {
         .spyOn(mockSentimentService, 'getSentimentById')
         .mockImplementationOnce(async () => expected);
 
-      const result = await controller.getOne(expected.id);
+      const result = await controller.getOne(
+        Types.ObjectId.createFromHexString(expected.id),
+      );
 
       expect(result).toBe(expected);
     });
@@ -67,7 +70,9 @@ describe('SentimentController', () => {
           throw new Error('error');
         }) as jest.Mock);
 
-      await expect(() => controller.getOne('test')).rejects.toThrow('error');
+      await expect(() =>
+        controller.getOne(new Types.ObjectId()),
+      ).rejects.toThrow('error');
     });
   });
 
