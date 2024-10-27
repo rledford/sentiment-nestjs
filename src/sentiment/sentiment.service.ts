@@ -1,15 +1,13 @@
 import {
-  BadRequestException,
   Injectable,
-  NotFoundException,
+  NotFoundException
 } from '@nestjs/common';
-import { LoggerService } from 'src/platform/services/logger.service';
-import { LanguageService } from 'src/platform/services/language.service';
-import { SentimentScoreDTO, SentimentDTO } from './sentiment.dto';
 import { InjectModel } from '@nestjs/mongoose';
+import { Model, Types } from 'mongoose';
+import { LanguageService } from 'src/platform/services/language.service';
+import { LoggerService } from 'src/platform/services/logger.service';
+import { SentimentDTO, SentimentScoreDTO } from './sentiment.dto';
 import { Sentiment } from './sentiment.schema';
-import { Model } from 'mongoose';
-import { Types } from 'mongoose';
 
 @Injectable()
 export class SentimentService {
@@ -51,20 +49,8 @@ export class SentimentService {
     return result;
   }
 
-  async getSentimentById(id: string): Promise<SentimentDTO> {
-    let result: Sentiment | null;
-
-    try {
-      const _id = Types.ObjectId.createFromHexString(id);
-      result = await this.sentimentModel.findById(_id);
-    } catch (err) {
-      switch (err.name) {
-        case 'BSONError':
-          throw new BadRequestException('Invalid ID');
-        default:
-          throw err;
-      }
-    }
+  async getSentimentById(id: Types.ObjectId): Promise<SentimentDTO> {
+    const result = await this.sentimentModel.findById(id);
 
     if (!result) {
       throw new NotFoundException();

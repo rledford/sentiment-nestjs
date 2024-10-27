@@ -13,6 +13,8 @@ import {
   SentimentScoreDTO,
 } from './sentiment.dto';
 import { SentimentService } from './sentiment.service';
+import { Types } from 'mongoose';
+import { ParseObjectIdPipe } from 'src/platform/pipes/objectId.pipe';
 
 @ApiTags('sentiments')
 @Controller('sentiments')
@@ -31,11 +33,13 @@ export class SentimentController {
   @ApiOperation({
     summary: 'Get a recorded sentiment computation by id',
   })
-  @ApiParam({ name: 'id' })
+  @ApiParam({ name: 'id', type: Types.ObjectId })
   @ApiOkResponse({ type: SentimentDTO })
   @ApiNotFoundResponse()
   @ApiBadRequestResponse()
-  async getOne(@Param('id') id: string): Promise<SentimentDTO> {
+  async getOne(
+    @Param('id', ParseObjectIdPipe) id: Types.ObjectId,
+  ): Promise<SentimentDTO> {
     return this.service.getSentimentById(id);
   }
 
