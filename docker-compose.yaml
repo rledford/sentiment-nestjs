@@ -8,7 +8,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - /usr/local/docker/sentiment:/mongo/data
+      - ~/.local/docker/sentiment:/mongo/data
     environment:
       MONGO_INITDB_ROOT_USERNAME: dev
       MONGO_INITDB_ROOT_PASSWORD: mongo
