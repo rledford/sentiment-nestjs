@@ -9,7 +9,9 @@ export const generateSentiment = (): Sentiment => {
 
   doc._id = _id;
   doc.score = 1.0;
+  doc.magnitude = 0.5;
   doc.duration = 1.0;
+  doc.content = `test-${now}`;
   doc.createdAt = new Date(now);
   doc.updatedAt = new Date(now);
 
@@ -27,6 +29,8 @@ export const generateSentimentDTO = (): SentimentDTO => {
   dto.id = new Types.ObjectId().toHexString();
   dto.score = 1.0;
   dto.duration = 1.0;
+  dto.magnitude = 0.5;
+  dto.content = `test-${now}`;
   dto.createdAt = new Date(now);
   dto.updatedAt = new Date(now);
 
