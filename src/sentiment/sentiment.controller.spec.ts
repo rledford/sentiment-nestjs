@@ -53,7 +53,7 @@ describe('SentimentController', () => {
       const expected = generateSentimentDTO();
       jest
         .spyOn(mockSentimentService, 'getSentimentById')
-        .mockImplementationOnce(async (_: string) => expected);
+        .mockImplementationOnce(async () => expected);
 
       const result = await controller.getOne(expected.id);
 

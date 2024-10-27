@@ -7,7 +7,6 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { plainToClass } from 'class-transformer';
 import {
   SentimentDTO,
   SentimentInputDTO,
@@ -18,7 +17,7 @@ import { SentimentService } from './sentiment.service';
 @ApiTags('sentiments')
 @Controller('sentiments')
 export class SentimentController {
-  constructor(private readonly service: SentimentService) { }
+  constructor(private readonly service: SentimentService) {}
 
   @Post()
   @ApiOperation({ summary: 'Compute the sentiment of text' })

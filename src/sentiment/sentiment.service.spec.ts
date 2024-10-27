@@ -38,7 +38,7 @@ describe('SentimentService', () => {
 
       jest
         .spyOn(mockLanguageService, 'analyze')
-        .mockImplementationOnce(async (_: string) => ({
+        .mockImplementationOnce(async () => ({
           score: sentimentScore,
           magnitude: sentimentMag,
         }));
@@ -61,7 +61,7 @@ describe('SentimentService', () => {
 
       jest
         .spyOn(mockLanguageService, 'analyze')
-        .mockImplementationOnce(async (_: string) => ({
+        .mockImplementationOnce(async () => ({
           score: sentimentScore,
           magnitude: sentimentMag,
         }));
