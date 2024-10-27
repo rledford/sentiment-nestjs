@@ -34,6 +34,7 @@ services:
     environment:
       # these should be set elsewhere
       # e.g. docker env flag
+      - NODE_ENV=development
       - PORT=8900
       - MONGO_HOST=mongo
       - MONGO_PORT=27017
