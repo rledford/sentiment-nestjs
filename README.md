@@ -16,13 +16,12 @@ persistence.
 This application supports configuration through environment variables and `.env`
 files. See [.env.example](./.env.example)
 
-When using `.env` files for configuration locally, each `NODE_ENV` value should have
-a specific file.
+> [!IMPORTANT]
+> When using `.env` files to configure the app locally, ensure there is a
+> `.env.{NODE_ENV}.local` file in the project root.
 
-| NODE_ENV              | File                     |
-| --------------------- | ------------------------ |
-| development (default) | `.env.development.local` |
-| test                  | `.env.test.local`        |
+By default, the app assumes `NODE_ENV` is `development`. When running any of
+the test scripts, `NODE_ENV` is `test`.
 
 ## Dev Setup
 
@@ -53,8 +52,8 @@ located in the root of the project directory.
 > [!IMPORTANT]
 > E2E tests require a database. It is recommended to point the app at a
 > different database than what is used for development. Just using a
-> different `MONGO_NAME` will work - it does not need to be an entirely
-> separate MongoDB instance.
+> different `MONGO_NAME` will work (it does not need to be an entirely
+> separate MongoDB instance).
 
 ```sh
 # run tests
@@ -70,8 +69,8 @@ pnpm test:e2e
 ## Running in Docker
 
 Modify the `environment` variables for the `app` in the `docker-compose.yaml`
-file as needed. These variables would preferably be set elsewhere but
-for demonstration purposes, we have them there. The only variable that
+file as needed. These variables would preferably be set elsewhere but,
+for demonstration purposes, they're declared there. The only variable that
 should need to be changed is the `GNL_CLIENT_API_KEY` which is needed for
 Google Natural Language API integration.
 
