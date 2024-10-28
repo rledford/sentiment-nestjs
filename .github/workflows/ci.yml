@@ -1,0 +1,31 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    env:
+      PORT: '8900'
+      MONGO_HOST: 'test'
+      MONGO_PORT: '27017'
+      MONGO_USER: 'test'
+      MONGO_PASS: 'test'
+      MONGO_NAME: 'test'
+      GNL_CLIENT_API_KEY: 'test'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint / Build / Test
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - run: npm i -g pnpm@v9.7.0
+      - run: pnpm i
+      - run: pnpm lint
+      - run: pnpm build
+      - run: pnpm test:cov
+
