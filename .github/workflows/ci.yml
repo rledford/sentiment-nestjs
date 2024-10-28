@@ -8,6 +8,14 @@ on:
 
 jobs:
   build:
+    env:
+      PORT: '8900'
+      MONGO_HOST: 'test'
+      MONGO_PORT: 'test'
+      MONGO_USER: 'test'
+      MONGO_PASS: 'test'
+      MONGO_NAME: 'test'
+      GNL_CLIENT_API_KEY: 'test'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
