@@ -40,7 +40,7 @@ export class SentimentController {
   @ApiOperation({
     summary: 'Get a recorded sentiment computation by id',
   })
-  @ApiParam({ name: 'id', type: Types.ObjectId })
+  @ApiParam({ name: 'id', type: 'string' })
   @ApiOkResponse({ type: SentimentDTO })
   @ApiNotFoundResponse()
   @ApiBadRequestResponse()
