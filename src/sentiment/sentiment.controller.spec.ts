@@ -63,6 +63,14 @@ describe('SentimentController', () => {
       expect(result).toBe(expected);
     });
 
+    it('should thow not found if sentiment does not exist', async () => {
+      const id = new Types.ObjectId();
+      jest
+        .spyOn(mockSentimentService, 'getSentimentById')
+        .mockImplementationOnce(async () => null);
+      await expect(() => controller.getOne(id)).rejects.toThrow('Not Found');
+    });
+
     it('should return error if service throws', async () => {
       jest
         .spyOn(mockSentimentService, 'getSentimentById')

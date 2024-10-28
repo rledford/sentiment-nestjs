@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { LanguageService } from 'src/platform/services/language.service';
@@ -46,12 +46,10 @@ export class SentimentService {
     return result;
   }
 
-  async getSentimentById(id: Types.ObjectId): Promise<SentimentDTO> {
+  async getSentimentById(id: Types.ObjectId): Promise<SentimentDTO | null> {
     const result = await this.sentimentModel.findById(id);
 
-    if (!result) {
-      throw new NotFoundException();
-    }
+    if (!result) return null;
 
     return this.sentimentToDTO(result);
   }

@@ -2,8 +2,8 @@ import { createMock } from '@golevelup/ts-jest';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Model, Types } from 'mongoose';
-import { LoggerService } from 'src/platform/services/logger.service';
 import { LanguageService } from 'src/platform/services/language.service';
+import { LoggerService } from 'src/platform/services/logger.service';
 import { Sentiment } from './sentiment.schema';
 import { SentimentService } from './sentiment.service';
 import { generateSentiment, generateSentiments } from './test-utils/data';
@@ -117,7 +117,15 @@ describe('SentimentService', () => {
 
       const result = await service.getSentimentById(sentiment._id);
 
-      expect(result.id).toBe(sentiment._id.toHexString());
+      expect(result?.id).toBe(sentiment._id.toHexString());
+    });
+
+    it('should return null if not found', async () => {
+      jest.spyOn(mockSentimentModel, 'findById').mockResolvedValueOnce(null);
+
+      const result = await service.getSentimentById(new Types.ObjectId());
+
+      expect(result).toBe(null);
     });
 
     it('should throw on database error', async () => {
@@ -129,14 +137,6 @@ describe('SentimentService', () => {
       const id = new Types.ObjectId();
       await expect(() => service.getSentimentById(id)).rejects.toThrow(
         'Something went wrong',
-      );
-    });
-
-    it('should thow not found if sentiment does not exist', async () => {
-      const id = new Types.ObjectId();
-      jest.spyOn(mockSentimentModel, 'findById').mockResolvedValueOnce(null);
-      await expect(() => service.getSentimentById(id)).rejects.toThrow(
-        'Not Found',
       );
     });
   });

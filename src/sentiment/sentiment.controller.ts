@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
@@ -40,7 +47,11 @@ export class SentimentController {
   async getOne(
     @Param('id', ParseObjectIdPipe) id: Types.ObjectId,
   ): Promise<SentimentDTO> {
-    return this.service.getSentimentById(id);
+    const result = await this.service.getSentimentById(id);
+
+    if (!result) throw new NotFoundException();
+
+    return result;
   }
 
   @Get()
